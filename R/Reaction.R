@@ -190,6 +190,60 @@ getMassBalance <- function(db, rxn) {
   return(out)
 }
 
+#' Find reaction(s)
+#'
+#' @description Find a reaction by single or combined criteria.
+#'
+#' @param db Database of class \link(gapseqDB)
+#' @param cpd Compound IDs to look for.
+#' @param cpd.link "AND" or "OR". "AND" requires that all IDs in 'cpd.link'
+#' occur in a reaction. "OR" requires only one compound to be present.
+#' @param ec EC number to look for.
+#' @param grep.str Regular expression applied to the reaction equation.
+#'
+#' @export
+findReactions <- function(db,
+                          cpd = NULL, cpd.link = "AND",
+                          ec = NULL,
+                          grep.str = NULL,
+                          global.link = "AND") {
+  highlights <- cpd
+
+  #––––––––––––––#
+  # compound ids #
+  #––––––––––––––#
+  cpd.hits <- NA
+  if(!is.null(cpd)) {
+    dttmp <- db@rxn$stoich[compound %in% cpd][!duplicated(paste0(id, compound))]
+    if(cpd.link == "AND") {
+      cpd.hits <- dttmp[,.N, by = id][N == length(cpd), id]
+    }
+    if(cpd.link == "OR") {
+      cpd.hits <- dttmp[, unique(id)]
+    }
+  }
+
+  #––––––––––––––#
+  # compound ids #
+  #––––––––––––––#
+  grep.hits <- NA
+  if(!is.null(grep.str)) {
+
+  }
+
+  comb.hits <- cpd.hits
+  comb.hits <- sort(comb.hits)
+
+  if(length(comb.hits) > 0) {
+    rxn.hits <- colorizeRxnID(db, comb.hits)
+    hits.equation <- getRxnEquation(db, comb.hits,
+                                    highlight = highlights,
+                                    format.style = TRUE)
+    cat(paste0(rxn.hits,": ", hits.equation), sep = "\n")
+  }
+
+}
+
 sanityCheckRxns <- function(db, rxn) {
   tmp <- rxn[rxn %in% db@rxn$main$id]
   if(length(tmp) == 0)
