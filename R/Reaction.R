@@ -80,7 +80,7 @@ getRxnEquation <- function(db, rxn, highlight = NULL, use.ids = FALSE,
 #' @import crayon
 #'
 #' @export
-cpdReactions <- function(db, cpd) {
+cpdRxns <- function(db, cpd) {
   if(length(cpd) > 1)
     stop("More than one compound ID provided, which is not supported (yet)")
 
@@ -145,8 +145,6 @@ getChargeBalance <- function(db, rxn) {
 #' @param db Database of class \link{gapseqDB-class}
 #' @param rxn Reaction ID(s)
 #'
-#' @importFrom CHNOSZ makeup
-#'
 #' @export
 getMassBalance <- function(db, rxn) {
   if(length(rxn) == 0)
@@ -202,36 +200,54 @@ getMassBalance <- function(db, rxn) {
 #' @param grep.str Regular expression applied to the reaction equation.
 #'
 #' @export
-findReactions <- function(db,
-                          cpd = NULL, cpd.link = "AND",
-                          ec = NULL,
-                          grep.str = NULL,
-                          global.link = "AND") {
+findRxns <- function(db,
+                     cpd = NULL, cpd.link = "AND",
+                     ec = NULL,
+                     grep.str = NULL,
+                     global.link = "AND") {
   highlights <- cpd
 
+  hits <- list()
   #––––––––––––––#
   # compound ids #
   #––––––––––––––#
-  cpd.hits <- NA
   if(!is.null(cpd)) {
     dttmp <- db@rxn$stoich[compound %in% cpd][!duplicated(paste0(id, compound))]
     if(cpd.link == "AND") {
-      cpd.hits <- dttmp[,.N, by = id][N == length(cpd), id]
+      hits[["cpd"]] <- dttmp[,.N, by = id][N == length(cpd), id]
     }
     if(cpd.link == "OR") {
-      cpd.hits <- dttmp[, unique(id)]
+      hits[["cpd"]] <- dttmp[, unique(id)]
     }
   }
 
   #––––––––––––––#
-  # compound ids #
+  # EC           #
   #––––––––––––––#
-  grep.hits <- NA
+  if(!is.null(ec)) {
+    hits[["ec"]] <- db@rxn$ec[EC == ec, id]
+  }
+  #––––––––––––––#
+  # grep         #
+  #––––––––––––––#
   if(!is.null(grep.str)) {
-
+    cpd.grephits <- db@cpd$main[grepl(grep.str, name) |
+                                  grepl(grep.str, abbreviation), id]
+    highlights <- unique(c(highlights, cpd.grephits))
+    hits[["grep"]] <- db@rxn$stoich[compound %in% cpd.grephits, unique(id)]
   }
 
-  comb.hits <- cpd.hits
+  #––––––––––––––#
+  # Combine hits #
+  #––––––––––––––#
+  if(global.link == "OR") {
+    comb.hits <- Reduce(c, hits)
+  }
+  if(global.link == "AND") {
+    comb.hits <- Reduce(intersect, hits)
+  }
+  comb.hits <- unique(comb.hits[!is.na(comb.hits)])
+
   comb.hits <- sort(comb.hits)
 
   if(length(comb.hits) > 0) {

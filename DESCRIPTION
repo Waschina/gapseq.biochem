@@ -14,9 +14,9 @@ Description: A small package that helps to explore gapseq's biochemistry
 Depends: 
     R (>= 4.0.0),
     data.table (>= 1.13.4),
-    hms (>= 0.5.3) 
+    hms (>= 0.5.3) ,
+    CHNOSZ (>= 1.4.3)
 Imports:
-    CHNOSZ,
     crayon,
     stringr,
     methods
@@ -24,3 +24,7 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

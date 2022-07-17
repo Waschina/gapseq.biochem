@@ -1,0 +1,106 @@
+---
+title: "Explore gapseq biochemistry"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explore gapseq biochemistry}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Before you start
+
+This package (gapseq.biochem) is a small tool to explore the biochemistry
+database behind gapseq. It is *not* the gapseq software itself. You can find all
+information on gapseq here:
+
+- Publication: [Genome Biology](https://doi.org/10.1186/s13059-021-02295-1)
+- Documentation: [ReadTheDocs](https://gapseq.readthedocs.io/en/latest/)
+- Source code: [GitHub](https://github.com/jotech/gapseq)
+
+***Important note:*** The biochemistry database in gapseq is derived from 
+ModelSEED (https://modelseed.org/). In order to give credits to the developers
+and curators of ModelSEED, we strongly encourage you to cite also the
+publication for the [ModelSEED database](https://doi.org/10.1093/nar/gkaa746)
+when you are using gapseq.
+
+## Initialization
+
+With the function `initDB()`, the database can be initialized from different 
+sources and or different versions.
+
+```{r setup}
+library(gapseq.biochem)
+
+# Latest version from github
+db <- initDB()
+
+# Version at a specific commit
+#db <- initDB("c1761254bf65f2789e012fd6ae2da3e45f2b6bae") 
+
+# Database from a local gapseq installation
+#db <- initDB("~/Software/gapseq/")
+```
+
+## Exploring the biochemistry database
+
+### Summary of a specific reaction
+```{r}
+summary(db, "rxn10132")
+```
+
+### Summary of a specific compound
+
+Example: Summary for Lactose
+```{r}
+summary(db, "cpd00208")
+```
+
+### Find reactions
+There are different ways to search for specific reactions, e.g. via specific
+compound IDs (if they are known), via regular expressions/search terms for
+compound names and/or by EC-numbers. Everything can be done with a single
+function: `findRxns()`. Here are a few example cases:
+
+Example: Find reactions with the compound cpd00211 (Butyrate)
+```{r}
+findRxns(db, cpd = "cpd00211")
+```
+
+Example: Find reactions with the both compound ids: cpd00100 (Glycerol) and 
+cpd22614 (sulfoquinovose)
+```{r}
+findRxns(db, cpd = c("cpd00100","cpd22614"))
+```
+
+Example: Find reactions with at least one of the compound ids: cpd22614
+(sulfoquinovose) or cpd01337 (Romicil).
+```{r}
+findRxns(db, cpd = c("cpd22614","cpd01337"), cpd.link = "OR")
+```
+
+Example: Find reactions for EC 4.2.1.22.
+```{r}
+findRxns(db, ec = "4.2.1.22")
+```
+
+Example: Find reactions, where the on participating metabolite contains the term
+"sulfoquinovose"
+```{r}
+findRxns(db, grep.str = "sulfoquinovose")
+```
+
+Example: Find all reactions that include NADH (cpd00008) as co-factor and where
+at least one compound matches the term "L-Lactate" or "D-Lactate":
+```{r}
+findRxns(db, cpd = "cpd00004", grep.str = "(D|L)-Lactate")
+```
+
+
+

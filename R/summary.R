@@ -43,7 +43,7 @@ summaryCPD <- function(db, id) {
   cat("Abbreviation: \t",db@cpd$main[id,abbreviation],"\n")
   cat("\n")
 
-  cpdrxn <- cpdReactions(db, id)
+  cpdrxn <- cpdRxns(db, id)
 
   # consuming reactions
   c.rxns <- getRxnEquation(db, cpdrxn$consuming, highlight = id,
