@@ -7,7 +7,7 @@
 \S4method{summary}{gapseqDB}(object, id)
 }
 \arguments{
-\item{object}{Database of class \link(gapseqDB)}
+\item{object}{Database of class \link{gapseqDB-class}}
 
 \item{id}{ID of a compound or reaction}
 }

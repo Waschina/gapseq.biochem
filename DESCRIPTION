@@ -15,6 +15,11 @@ Depends:
     R (>= 4.0.0),
     data.table (>= 1.13.4),
     hms (>= 0.5.3) 
+Imports:
+    CHNOSZ,
+    crayon,
+    stringr,
+    methods
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true

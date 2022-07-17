@@ -2,7 +2,7 @@
 #'
 #' @description Prints a summary for a reaction or compound to console prompt
 #'
-#' @param object Database of class \link(gapseqDB)
+#' @param object Database of class \link{gapseqDB-class}
 #' @param id ID of a compound or reaction
 #'
 #' @details Compound IDs should have the prefix "cpd" and reactions "rxn"

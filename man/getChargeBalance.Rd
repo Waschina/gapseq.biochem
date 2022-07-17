@@ -7,7 +7,7 @@
 getChargeBalance(db, rxn)
 }
 \arguments{
-\item{db}{Database of class \link(gapseqDB)}
+\item{db}{Database of class \link{gapseqDB-class}}
 
 \item{rxn}{Reaction ID(s)}
 }

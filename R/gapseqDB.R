@@ -1,7 +1,10 @@
 #' S4 class for gapseq's biochemistry database
 #'
-#' @slot rxn A list of tables (\link(data.table)) with reaction information
-#' @slot cpd A list of tables (\link(data.table)) with compound information
+#' @slot rxn A list of tables (\link{data.table}) with reaction information
+#' @slot cpd A list of tables (\link{data.table}) with compound information
+#'
+#' @name gapseqDB-class
+#' @rdname gapseqDB-class
 #'
 #' @export
 setClass("gapseqDB",

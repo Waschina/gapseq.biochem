@@ -2,12 +2,12 @@
 #'
 #' @description Nicely formatted reaction equations with compound names or IDs.
 #'
-#' @param db Database of class \link(gapseqDB)
+#' @param db Database of class \link{gapseqDB-class}
 #' @param rxn Reaction ID(s)
 #' @param highlight Compound IDs whose names/IDs should be highlighted in red.
 #' (only works if 'format.style' is TRUE)
 #' @param use.ids Use compound IDs instead of compound names?
-#' @param format.styles Should the output be formatted (highlights and grey
+#' @param format.style Should the output be formatted (highlights and grey
 #' background for external metabolites)?
 #'
 #' @import crayon
@@ -71,7 +71,7 @@ getRxnEquation <- function(db, rxn, highlight = NULL, use.ids = FALSE,
 #' @description Find all reaction where a specific compound participates grouped
 #' by consuming, producing, consuming+producing, transport.
 #'
-#' @param db Database of class \link(gapseqDB)
+#' @param db Database of class \link{gapseqDB-class}
 #' @param cpd Compound ID
 #'
 #' @returns A list with four character vectors (consuming, producing,
@@ -116,7 +116,7 @@ cpdReactions <- function(db, cpd) {
 #'
 #' @description Calculates the charge balance for reaction(s)
 #'
-#' @param db Database of class \link(gapseqDB)
+#' @param db Database of class \link{gapseqDB-class}
 #' @param rxn Reaction ID(s)
 #'
 #' @export
@@ -142,7 +142,7 @@ getChargeBalance <- function(db, rxn) {
 #'
 #' @description Calculates the mass balance for reaction(s)
 #'
-#' @param db Database of class \link(gapseqDB)
+#' @param db Database of class \link{gapseqDB-class}
 #' @param rxn Reaction ID(s)
 #'
 #' @importFrom CHNOSZ makeup
@@ -194,7 +194,7 @@ getMassBalance <- function(db, rxn) {
 #'
 #' @description Find a reaction by single or combined criteria.
 #'
-#' @param db Database of class \link(gapseqDB)
+#' @param db Database of class \link{gapseqDB-class}
 #' @param cpd Compound IDs to look for.
 #' @param cpd.link "AND" or "OR". "AND" requires that all IDs in 'cpd.link'
 #' occur in a reaction. "OR" requires only one compound to be present.

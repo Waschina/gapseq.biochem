@@ -13,7 +13,7 @@ getRxnEquation(
 )
 }
 \arguments{
-\item{db}{Database of class \link(gapseqDB)}
+\item{db}{Database of class \link{gapseqDB-class}}
 
 \item{rxn}{Reaction ID(s)}
 
@@ -22,7 +22,7 @@ getRxnEquation(
 
 \item{use.ids}{Use compound IDs instead of compound names?}
 
-\item{format.styles}{Should the output be formatted (highlights and grey
+\item{format.style}{Should the output be formatted (highlights and grey
 background for external metabolites)?}
 }
 \description{

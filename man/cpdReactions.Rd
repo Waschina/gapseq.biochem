@@ -7,7 +7,7 @@
 cpdReactions(db, cpd)
 }
 \arguments{
-\item{db}{Database of class \link(gapseqDB)}
+\item{db}{Database of class \link{gapseqDB-class}}
 
 \item{cpd}{Compound ID}
 }

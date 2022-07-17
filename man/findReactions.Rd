@@ -9,19 +9,21 @@ findReactions(
   cpd = NULL,
   cpd.link = "AND",
   ec = NULL,
-  ec.link = "AND",
   grep.str = NULL,
-  grep.str.link = "AND",
   global.link = "AND"
 )
 }
 \arguments{
-\item{db}{Database of class \link(gapseqDB)}
+\item{db}{Database of class \link{gapseqDB-class}}
 
 \item{cpd}{Compound IDs to look for.}
 
 \item{cpd.link}{"AND" or "OR". "AND" requires that all IDs in 'cpd.link'
 occur in a reaction. "OR" requires only one compound to be present.}
+
+\item{ec}{EC number to look for.}
+
+\item{grep.str}{Regular expression applied to the reaction equation.}
 }
 \description{
 Find a reaction by single or combined criteria.

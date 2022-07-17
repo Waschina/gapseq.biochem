@@ -10,8 +10,8 @@ S4 class for gapseq's biochemistry database
 \section{Slots}{
 
 \describe{
-\item{\code{rxn}}{A list of tables (\link(data.table)) with reaction information}
+\item{\code{rxn}}{A list of tables (\link{data.table}) with reaction information}
 
-\item{\code{cpd}}{A list of tables (\link(data.table)) with compound information}
+\item{\code{cpd}}{A list of tables (\link{data.table}) with compound information}
 }}
 
