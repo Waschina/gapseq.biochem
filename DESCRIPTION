@@ -7,7 +7,12 @@ Authors@R:
              family = "Waschina",
              role = c("aut","cre"),
              email = "s.waschina@nutrinf.uni-kiel.de",
-             comment = c(ORCID = "0000-0002-6290-3593")))
+             comment = c(ORCID = "0000-0002-6290-3593")),
+      person(given = "Johannes",
+             family = "Zimmermann",
+             role = c("aut"),
+             email = "j.zimmermann@iem.uni-kiel.de",
+             comment = c(ORCID = "0000-0002-5041-1954")))
 Maintainer: Silvio Waschina <s.waschina@nutrinf.uni-kiel.de>
 Description: A small package that helps to explore gapseq's biochemistry
     database.
