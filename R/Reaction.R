@@ -203,6 +203,7 @@ getMassBalance <- function(db, rxn) {
 findRxns <- function(db,
                      cpd = NULL, cpd.link = "AND",
                      ec = NULL,
+                     pwy = NULL,
                      grep.str = NULL,
                      global.link = "AND") {
   highlights <- cpd
@@ -226,6 +227,12 @@ findRxns <- function(db,
   #––––––––––––––#
   if(!is.null(ec)) {
     hits[["ec"]] <- db@rxn$ec[EC == ec, id]
+  }
+  #––––––––––––––#
+  # pwathway     #
+  #––––––––––––––#
+  if(!is.null(pwy)) {
+    hits[["pwy"]] <- db@rxn$pwy[ meta.pwy == pwy | meta.pwy.name %like% pwy | meta.sub %like% pwy, id]
   }
   #––––––––––––––#
   # grep         #
