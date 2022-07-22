@@ -111,6 +111,12 @@ summaryRXN <- function(db, id) {
   cat("Abbreviation:\t", db@rxn$main[id, abbreviation],"\n")
   cat("gapseq status:\t", db@rxn$main[id, gapseq.status],"\n")
   cat("EC:\t\t", paste(db@rxn$ec[id, EC], collapse = "; "),"\n")
+ 
+  if(id %in% db@rxn$pwy$id){
+    cat("\nPathways:\n")
+    print(unique(db@rxn$pwy[id, .(meta.pwy, meta.pwy.name)]))
+    cat("\n")
+  } 
 
   # chemical balances
   cb <- getChargeBalance(db, id)

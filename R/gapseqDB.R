@@ -11,12 +11,14 @@ setClass("gapseqDB",
 
          slots = c(
            rxn = "list",
-           cpd = "list"
+           cpd = "list",
+           pwy = "list"
          ),
 
          prototype = list(
            rxn = list(),
-           cpd = list()
+           cpd = list(),
+           pwy = list()
          )
 )
 
@@ -71,6 +73,9 @@ initDB <- function(src = NULL) {
   link.rxns <- paste0(pfx,"dat/seed_reactions_corrected.tsv")
   link.ec   <- paste0(pfx,"dat/seed_Enzyme_Class_Reactions_Aliases_unique_edited.tsv")
 
+  # pathways
+  link.pwys <- paste0(pfx,"dat/meta_rea_pwy-gapseq.tbl")
+
   #–––––––––––––#
   # Metabolites #
   #–––––––––––––#
@@ -114,6 +119,16 @@ initDB <- function(src = NULL) {
                    by=.(`External ID`, Source)]
   rxns.ec <- dl.ecs[, .(id, EC = `External ID`, source = Source)]
   setkey(rxns.ec, "id")
+  
+  dl.pwys <- fread(link.pwys)
+  rxns.pwy <- dl.pwys[,list(id=unlist(strsplit(gapseq," "))),by=.(rxn,name,pathway,pathway.name,subsystem)]
+  rxns.pwy <- rxns.pwy[,list(id, meta.name=name, meta.pwy=pathway, meta.pwy.name=pathway.name, meta.sub=subsystem)]
+  setkey(rxns.pwy, "id")
+
+  #–––––––––––––#
+  # Pathways    #
+  #–––––––––––––#
+  pwys <- dl.pwys[,list(id=gapseq, meta.rxn.id=rxn, meta.rxn.name=name, ec, meta.pwy=pathway, meta.pwy.name=pathway.name, meta.sub=subsystem)]
 
   #––––––––––––––––––––––––#
   # construct S4 DB object #
@@ -121,9 +136,11 @@ initDB <- function(src = NULL) {
   out <- new("gapseqDB",
              rxn = list(main   = rxns,
                         ec     = rxns.ec,
-                        stoich = rxns.stoich),
+                        stoich = rxns.stoich,
+                        pwy    = rxns.pwy),
              cpd = list(main   = mets,
-                        xref   = mets.xref))
+                        xref   = mets.xref),
+             pwy = list(main   = pwys))
 
 
   return(out)
