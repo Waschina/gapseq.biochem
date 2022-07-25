@@ -197,6 +197,7 @@ getMassBalance <- function(db, rxn) {
 #' @param cpd.link "AND" or "OR". "AND" requires that all IDs in 'cpd.link'
 #' occur in a reaction. "OR" requires only one compound to be present.
 #' @param ec EC number to look for.
+#' @param pwy Pathway ID or search term for pathway name.
 #' @param grep.str Regular expression applied to the reaction equation.
 #'
 #' @export
@@ -229,10 +230,15 @@ findRxns <- function(db,
     hits[["ec"]] <- db@rxn$ec[EC == ec, id]
   }
   #––––––––––––––#
-  # pwathway     #
+  # pathway      #
   #––––––––––––––#
   if(!is.null(pwy)) {
-    hits[["pwy"]] <- db@rxn$pwy[ meta.pwy == pwy | meta.pwy.name %like% pwy | meta.sub %like% pwy, id]
+    hits[["pwy"]] <- db@rxn$pwy[meta.pwy == pwy | meta.pwy == paste0("|",pwy,"|"), id]
+    if(length(hits[["pwy"]]) == 0) {
+      # remove leading and trailing pipes
+      pwy <- gsub("^\\||\\|$","",pwy)
+      hits[["pwy"]] <- db@rxn$pwy[meta.pwy.name %like% pwy | meta.sub %like% pwy, id]
+    }
   }
   #––––––––––––––#
   # grep         #

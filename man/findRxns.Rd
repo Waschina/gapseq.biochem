@@ -9,6 +9,7 @@ findRxns(
   cpd = NULL,
   cpd.link = "AND",
   ec = NULL,
+  pwy = NULL,
   grep.str = NULL,
   global.link = "AND"
 )
@@ -22,6 +23,8 @@ findRxns(
 occur in a reaction. "OR" requires only one compound to be present.}
 
 \item{ec}{EC number to look for.}
+
+\item{pwy}{Pathway ID or search term for pathway name.}
 
 \item{grep.str}{Regular expression applied to the reaction equation.}
 }
