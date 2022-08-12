@@ -148,6 +148,7 @@ initDB <- function(src = NULL) {
 
 #' @import crayon
 colorizeRxnID <- function(db, id) {
+  black <- make_style("black")
   gs.corrected <- make_style("palegreen3", bg = TRUE)
   gs.approved <- make_style("palegreen1", bg = TRUE)
   gs.removed <- make_style("pink", bg = TRUE)
@@ -156,22 +157,22 @@ colorizeRxnID <- function(db, id) {
   # corrected
   ind <- which(id %in% db@rxn$main[gapseq.status == "corrected", id])
   if(length(ind)>0)
-    id[ind] <- gs.corrected(id[ind])
+    id[ind] <- gs.corrected(black(id[ind]))
 
   # corrected
   ind <- which(id %in% db@rxn$main[gapseq.status == "approved", id])
   if(length(ind)>0)
-    id[ind] <- gs.approved(id[ind])
+    id[ind] <- gs.approved(black(id[ind]))
 
   # removed
   ind <- which(id %in% db@rxn$main[gapseq.status == "removed", id])
   if(length(ind)>0)
-    id[ind] <- gs.removed(id[ind])
+    id[ind] <- gs.removed(black(id[ind]))
 
   # removed
   ind <- which(id %in% db@rxn$main[gapseq.status == "not.assessed", id])
   if(length(ind)>0)
-    id[ind] <- gs.notassessed(id[ind])
+    id[ind] <- gs.notassessed(black(id[ind]))
 
   return(id)
 }

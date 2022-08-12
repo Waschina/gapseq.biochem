@@ -50,7 +50,7 @@ getRxnEquation <- function(db, rxn, highlight = NULL, use.ids = FALSE,
     # any external metabolites
     ind_ex <- which(dttmp$compartment != 0)
     if(length(ind_ex) > 0)
-      cpd_str[ind_ex] <- bgWhite(cpd_str[ind_ex])
+      cpd_str[ind_ex] <- black$bgWhite(cpd_str[ind_ex])
 
     # combine equation
     res[rxni] <- paste(paste(cpd_str[dttmp$stoichiometry < 0], collapse = " + "),
