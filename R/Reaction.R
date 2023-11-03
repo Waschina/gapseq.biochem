@@ -199,6 +199,7 @@ getMassBalance <- function(db, rxn) {
 #' @param ec EC number to look for.
 #' @param pwy Pathway ID or search term for pathway name.
 #' @param grep.str Regular expression applied to the reaction equation.
+#' @param use.ids Use compound IDs instead of compound names?
 #'
 #' @export
 findRxns <- function(db,
@@ -206,7 +207,8 @@ findRxns <- function(db,
                      ec = NULL,
                      pwy = NULL,
                      grep.str = NULL,
-                     global.link = "AND") {
+                     global.link = "AND",
+                     use.ids = FALSE) {
   highlights <- cpd
 
   hits <- list()
@@ -267,8 +269,10 @@ findRxns <- function(db,
     rxn.hits <- colorizeRxnID(db, comb.hits)
     hits.equation <- getRxnEquation(db, comb.hits,
                                     highlight = highlights,
-                                    format.style = TRUE)
-    cat(paste0(rxn.hits,": ", hits.equation), sep = "\n")
+                                    format.style = TRUE,
+                                    use.ids=use.ids)
+    hits.EC <- sapply(comb.hits, function(id) paste0(db@rxn$ec[id, EC],collapse=","))
+    cat(paste0(rxn.hits, ": ", hits.equation, " (EC: ",hits.EC,")"), sep = "\n")
   }
 
 }
